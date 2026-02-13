@@ -1,0 +1,73 @@
+import { StatusHeader } from '@/components/dashboard/StatusHeader';
+import { StationCard } from '@/components/dashboard/StationCard';
+import { SemaphorePanel } from '@/components/dashboard/SemaphorePanel';
+import { WaveformDisplay } from '@/components/dashboard/WaveformDisplay';
+import { ShakeMapEmbed } from '@/components/dashboard/ShakeMapEmbed';
+import { EventsTable } from '@/components/dashboard/EventsTable';
+import {
+  mockStations,
+  mockBuildingStatus,
+  mockLastEvent,
+  mockRecentEvents,
+  getStationStats
+} from '@/data/mockStations';
+
+const Index = () => {
+  const stats = getStationStats();
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Header */}
+      <StatusHeader
+        totalStations={stats.total}
+        onlineStations={stats.online}
+        warningStations={stats.warning}
+        offlineStations={stats.offline}
+      />
+
+      {/* Main Dashboard Grid */}
+      <main className="flex-1 p-4 grid grid-cols-12 gap-4 auto-rows-min">
+        {/* Left Column - Stations Grid */}
+        <section className="col-span-12 xl:col-span-3">
+          <h2 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wider">
+            Estaciones Raspberry Shake
+          </h2>
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+            {mockStations.map(station => (
+              <StationCard key={station.id} station={station} />
+            ))}
+          </div>
+        </section>
+
+        {/* Center Column - Waveforms & ShakeMap & Events */}
+        <section className="col-span-12 xl:col-span-5 flex flex-col gap-4">
+          {/* Waveform Display */}
+          <div className="min-h-[350px]">
+            <WaveformDisplay stations={mockStations} />
+          </div>
+
+          {/* Events Table */}
+          <EventsTable events={mockRecentEvents} />
+
+          {/* ShakeMap */}
+          <div className="min-h-[400px]">
+            <ShakeMapEmbed lastEvent={mockLastEvent} />
+          </div>
+        </section>
+
+        {/* Right Column - Semaphore Panel */}
+        <section className="col-span-12 xl:col-span-4">
+          <SemaphorePanel buildings={mockBuildingStatus} />
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-border px-6 py-3 text-xs text-muted-foreground flex items-center justify-between">
+        <span>Alertamiento S\u00EDsmico TAKAB 24/7 - Red WireGuard Segura</span>
+        <span>Raspberry Shake 4D + SASMEX + SSN</span>
+      </footer>
+    </div>
+  );
+};
+
+export default Index;

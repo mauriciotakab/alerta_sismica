@@ -1,0 +1,14 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    volumes:
+      - ./events:/app/events
+
+  web:
+    build:
+      context: ./web
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
