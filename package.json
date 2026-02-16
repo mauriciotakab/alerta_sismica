@@ -1,0 +1,21 @@
+{
+  "name": "alerta_sismica",
+  "version": "1.0.0",
+  "description": "Base de despliegue para Fase 1 con: - `web/`: frontend Vite + React + TypeScript. - `backend/`: FastAPI minimo con endpoint de salud. - `docker-compose.yml`: Nginx al frente del frontend con proxy a backend. - `events/`: carpeta reservada para artefactos de eventos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mauriciotakab/alerta_sismica.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mauriciotakab/alerta_sismica/issues"
+  },
+  "homepage": "https://github.com/mauriciotakab/alerta_sismica#readme"
+}

@@ -1,0 +1,14 @@
+{
+  "stations": [
+    {
+      "id": "AM.R0820.00",
+      "host": "10.8.0.150",
+      "seedlink_port": 18000,
+      "net": "AM",
+      "sta": "R0820",
+      "loc": "00",
+      "channels": ["EHZ", "ENE", "ENN", "ENZ"],
+      "target_hz_for_web": 20
+    }
+  ]
+}

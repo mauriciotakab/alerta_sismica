@@ -41,3 +41,20 @@ Respuesta esperada (ejemplo):
 
 - Esta base no implementa aun SeedLink, ring buffer ni streaming WS de datos.
 - El proxy `/ws/` ya esta configurado en Nginx como placeholder para la siguiente fase.
+
+## Backend smoke test
+
+```bash
+docker compose up --build
+curl http://localhost:8080/api/health
+curl http://localhost:8080/api/stations
+curl http://localhost:8080/api/stations/AM.R0820.00/status
+```
+
+Opcional (WebSocket):
+
+```bash
+websocat "ws://localhost:8080/ws/wave/AM.R0820.00/ENZ?window=30&hz=20"
+# o
+wscat -c "ws://localhost:8080/ws/wave/AM.R0820.00/ENZ?window=30&hz=20"
+```

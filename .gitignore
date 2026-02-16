@@ -31,3 +31,6 @@ __pycache__/
 # Runtime artifacts
 events/*
 !events/.gitkeep
+
+# Root-level requirements should not be used
+/requirements.txt
