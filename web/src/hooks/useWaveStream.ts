@@ -114,12 +114,22 @@ export function useWaveStream(stationId: string, channel: string, options: UseWa
           }
           if (payload.type === 'wave_chunk') {
             if (!receivedWsInitialRef.current) {
+              receivedWsInitialRef.current = true;
+
+              // Si ya cargamos snapshot REST, NO lo pisamos con el snapshot inicial del WS.
+              // Solo avanzamos el seq para que el streaming continúe limpio.
+              if (lastSeqRef.current > 0) {
+                lastSeqRef.current = Math.max(lastSeqRef.current, payload.seq);
+                return;
+              }
+
+              // Si NO hay snapshot REST (por error o primera carga), usamos el WS como fallback.
               setFs(payload.fs || wsHz);
               setSamples(trimSamples(payload.samples, payload.fs || wsHz, ringSeconds));
               lastSeqRef.current = payload.seq;
-              receivedWsInitialRef.current = true;
               return;
             }
+
             if (payload.seq <= lastSeqRef.current) {
               return;
             }
