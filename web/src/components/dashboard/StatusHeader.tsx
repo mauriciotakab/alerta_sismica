@@ -50,9 +50,9 @@ export function StatusHeader({
           <div className="flex items-center gap-2">
             <Activity className="w-8 h-8 text-primary" />
             <div>
-              <h1 className="text-xl font-bold">Alertamiento S\u00EDsmico TAKAB</h1>
+              <h1 className="text-xl font-bold">Alertamiento Sísmico TAKAB</h1>
               <p className="text-xs text-muted-foreground">
-                Red de Estaciones Raspberry Shake 4D
+                Red de Estaciones TakabAilert
               </p>
             </div>
           </div>

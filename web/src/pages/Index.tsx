@@ -29,7 +29,7 @@ const Index = () => {
         {/* Left Column - Stations Grid */}
         <section className="col-span-12 xl:col-span-3">
           <h2 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wider">
-            Estaciones Raspberry Shake
+            Estaciones TakabAilert
           </h2>
           {isLoading && (
             <p className="text-xs text-muted-foreground mb-2">Cargando estaciones...</p>
@@ -73,8 +73,8 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="border-t border-border px-6 py-3 text-xs text-muted-foreground flex items-center justify-between">
-        <span>Alertamiento S\u00EDsmico TAKAB 24/7 - Red WireGuard Segura</span>
-        <span>Raspberry Shake 4D + SASMEX + SSN</span>
+        <span>Alertamiento Sísmico TAKAB 24/7 - Red distribuida Segura</span>
+        <span>Sistema desarollado por TAKAB TECHNOLOGY</span>
       </footer>
     </div>
   );

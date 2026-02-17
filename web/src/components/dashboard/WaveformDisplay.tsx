@@ -142,7 +142,7 @@ export function WaveformDisplay({ stations }: WaveformDisplayProps) {
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2">
             <Activity className="w-5 h-5 text-primary" />
-            Waveform Clipboard
+            Waveform
           </CardTitle>
         </CardHeader>
         <CardContent className="flex-1 flex items-center justify-center text-sm text-muted-foreground">
