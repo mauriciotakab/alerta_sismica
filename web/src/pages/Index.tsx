@@ -4,25 +4,24 @@ import { SemaphorePanel } from '@/components/dashboard/SemaphorePanel';
 import { WaveformDisplay } from '@/components/dashboard/WaveformDisplay';
 import { ShakeMapEmbed } from '@/components/dashboard/ShakeMapEmbed';
 import { EventsTable } from '@/components/dashboard/EventsTable';
+import { useStations } from '@/hooks/useStations';
 import {
-  mockStations,
   mockBuildingStatus,
   mockLastEvent,
   mockRecentEvents,
-  getStationStats
 } from '@/data/mockStations';
 
 const Index = () => {
-  const stats = getStationStats();
+  const { stations, stats: stationStats, isLoading, error } = useStations();
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <StatusHeader
-        totalStations={stats.total}
-        onlineStations={stats.online}
-        warningStations={stats.warning}
-        offlineStations={stats.offline}
+        totalStations={stationStats.total}
+        onlineStations={stationStats.online}
+        warningStations={stationStats.warning}
+        offlineStations={stationStats.offline}
       />
 
       {/* Main Dashboard Grid */}
@@ -32,10 +31,21 @@ const Index = () => {
           <h2 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wider">
             Estaciones Raspberry Shake
           </h2>
+          {isLoading && (
+            <p className="text-xs text-muted-foreground mb-2">Cargando estaciones...</p>
+          )}
+          {error && (
+            <p className="text-xs text-[hsl(var(--status-offline))] mb-2">{error}</p>
+          )}
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-            {mockStations.map(station => (
+            {stations.map(station => (
               <StationCard key={station.id} station={station} />
             ))}
+            {!isLoading && stations.length === 0 && (
+              <div className="rounded border border-border/50 p-3 text-xs text-muted-foreground">
+                No hay estaciones configuradas.
+              </div>
+            )}
           </div>
         </section>
 
@@ -43,7 +53,7 @@ const Index = () => {
         <section className="col-span-12 xl:col-span-5 flex flex-col gap-4">
           {/* Waveform Display */}
           <div className="min-h-[350px]">
-            <WaveformDisplay stations={mockStations} />
+            <WaveformDisplay stations={stations} />
           </div>
 
           {/* Events Table */}
