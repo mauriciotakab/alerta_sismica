@@ -31,8 +31,6 @@ function WaveformCanvas({ samples }: WaveformCanvasProps) {
 
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
 
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
@@ -153,12 +151,12 @@ export function WaveformDisplay({ stations }: WaveformDisplayProps) {
   }
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col overflow-hidden">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <Activity className="w-5 h-5 text-primary" />
-            Waveform Clipboard
+            Waveform
           </CardTitle>
           <div className="flex gap-1">
             {availableChannels.map((channel) => (
@@ -189,7 +187,7 @@ export function WaveformDisplay({ stations }: WaveformDisplayProps) {
 
           {stations.map((station) => (
             <TabsContent key={station.id} value={station.id} className="flex-1 mt-2 min-h-0">
-              <div className="h-full min-h-[200px] bg-background rounded-lg overflow-hidden border border-border/50">
+              <div className="h-[260px] bg-background rounded-lg overflow-hidden border border-border/50">
                 <WaveformCanvas samples={activeTab === station.id ? samples : []} />
               </div>
               <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">

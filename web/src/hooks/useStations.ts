@@ -4,10 +4,13 @@ import { getStationStatus, getStations } from '@/services/api';
 import type { Station, StationConfig, StationStatus } from '@/types/seismic';
 
 const STATUS_POLL_MS = 5000;
+const LATENCY_WARNING_MS = 1500;
 
 function statusToUiState(status?: StationStatus): Station['status'] {
   if (!status) return 'offline';
-  return status.online ? 'online' : 'offline';
+  if (!status.online) return 'offline';
+  if ((status.latency_ms ?? 0) > LATENCY_WARNING_MS) return 'warning';
+  return 'online';
 }
 
 function toUiStation(config: StationConfig, status?: StationStatus): Station {
