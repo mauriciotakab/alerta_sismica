@@ -4,7 +4,7 @@ import { getStationStatus, getStations } from '@/services/api';
 import type { Station, StationConfig, StationStatus } from '@/types/seismic';
 
 const STATUS_POLL_MS = 5000;
-const LATENCY_WARNING_MS = 1500;
+const LATENCY_WARNING_MS = Number(import.meta.env.VITE_LATENCY_WARNING_MS ?? 1500);
 
 function statusToUiState(status?: StationStatus): Station['status'] {
   if (!status) return 'offline';

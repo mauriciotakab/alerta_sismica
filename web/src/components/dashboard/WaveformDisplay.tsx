@@ -136,7 +136,7 @@ export function WaveformDisplay({ stations }: WaveformDisplayProps) {
 
   if (!stations.length) {
     return (
-      <Card className="h-full flex flex-col">
+      <Card className="h-full min-h-0 flex flex-col">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2">
             <Activity className="w-5 h-5 text-primary" />
@@ -151,7 +151,7 @@ export function WaveformDisplay({ stations }: WaveformDisplayProps) {
   }
 
   return (
-    <Card className="h-full flex flex-col overflow-hidden">
+    <Card className="h-full min-h-0 flex flex-col">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
@@ -175,8 +175,8 @@ export function WaveformDisplay({ stations }: WaveformDisplayProps) {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col min-h-0">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
+      <CardContent className="flex-1 min-h-0 overflow-hidden flex flex-col">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 min-h-0 flex flex-col overflow-hidden">
           <TabsList className="w-full justify-start overflow-x-auto flex-shrink-0">
             {stations.map((station) => (
               <TabsTrigger key={station.id} value={station.id} className="text-xs">
@@ -186,20 +186,24 @@ export function WaveformDisplay({ stations }: WaveformDisplayProps) {
           </TabsList>
 
           {stations.map((station) => (
-            <TabsContent key={station.id} value={station.id} className="flex-1 mt-2 min-h-0">
-              <div className="h-[260px] bg-background rounded-lg overflow-hidden border border-border/50">
-                <WaveformCanvas samples={activeTab === station.id ? samples : []} />
+            <TabsContent key={station.id} value={station.id} className="flex-1 mt-2 min-h-0 overflow-hidden">
+              <div className="h-full min-h-0 flex flex-col">
+                <div className="flex-1 min-h-0 bg-background rounded-lg overflow-hidden border border-border/50">
+                  <WaveformCanvas samples={activeTab === station.id ? samples : []} />
+                </div>
+                <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground flex-shrink-0">
+                  <span>Canal: {activeChannel}</span>
+                  <span>{fs.toFixed(1)} Hz</span>
+                  <span className="text-primary font-mono">{getConnectionLabel(connectionState, samples.length > 0)}</span>
+                </div>
+                {isLoadingSnapshot && (
+                  <p className="text-[11px] text-muted-foreground mt-1 flex-shrink-0">Cargando snapshot...</p>
+                )}
+                {!isLoadingSnapshot && samples.length === 0 && (
+                  <p className="text-[11px] text-muted-foreground mt-1 flex-shrink-0">Sin datos en el buffer.</p>
+                )}
+                {error && <p className="text-[11px] text-[hsl(var(--status-warning))] mt-1 flex-shrink-0">{error}</p>}
               </div>
-              <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
-                <span>Canal: {activeChannel}</span>
-                <span>{fs.toFixed(1)} Hz</span>
-                <span className="text-primary font-mono">{getConnectionLabel(connectionState, samples.length > 0)}</span>
-              </div>
-              {isLoadingSnapshot && <p className="text-[11px] text-muted-foreground mt-1">Cargando snapshot...</p>}
-              {!isLoadingSnapshot && samples.length === 0 && (
-                <p className="text-[11px] text-muted-foreground mt-1">Sin datos en el buffer.</p>
-              )}
-              {error && <p className="text-[11px] text-[hsl(var(--status-warning))] mt-1">{error}</p>}
             </TabsContent>
           ))}
         </Tabs>

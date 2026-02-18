@@ -41,6 +41,7 @@ Respuesta esperada (ejemplo):
 
 - Esta base no implementa aun SeedLink, ring buffer ni streaming WS de datos.
 - El proxy `/ws/` ya esta configurado en Nginx como placeholder para la siguiente fase.
+- Para ajustar el umbral de warning por latencia en UI, define `VITE_LATENCY_WARNING_MS` en `web/.env` (ver `web/.env.example`).
 
 ## Backend smoke test
 
